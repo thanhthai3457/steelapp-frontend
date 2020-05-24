@@ -1,10 +1,11 @@
 import React from 'react'
 import LoginForm from './indexForm'
 
+import './index.scss'
+
 const Login = () => {
   return (
-    <div className="wrapper">
-      <div className="logo" />
+    <div className="loginWrapper">
       <LoginForm />
     </div>
   )

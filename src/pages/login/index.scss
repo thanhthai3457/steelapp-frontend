@@ -1,0 +1,24 @@
+.loginWrapper {
+  height: 100vh;
+  background-image: linear-gradient( rgba(182, 171, 171, 0.397), rgba(138, 136, 136, 0.418) ), url('../../assets/images/login.jpeg');
+  background-size: cover; 
+  position: relative;
+}
+
+.loginForm {
+  background-color: whitesmoke;
+  opacity: 0.85;
+  padding: 30px;
+  border-radius: 5px;
+  width: 30vw;
+  position: absolute;
+  top: 30%;
+  right: 35%;
+}
+
+.forgotPass {
+  color: #1890ff;
+  float: right;
+  margin: -10px 0px;
+  cursor: pointer;
+}

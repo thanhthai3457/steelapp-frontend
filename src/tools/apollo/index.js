@@ -8,7 +8,7 @@ import { getMainDefinition } from 'apollo-utilities'
 
 import { errorMiddleware } from './errorMiddleware'
 
-const domain = window.location.host // 'tms2.digihcs.com'
+const domain = 'localhost' // window.location.host // 'tms2.digihcs.com'
 const endPoint = `${process.env.END_POINT}`
 
 const urn = process.env.GRAPHQL_URN || `${domain}/${endPoint}`
