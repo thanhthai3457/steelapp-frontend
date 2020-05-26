@@ -1,16 +1,62 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { withRouter } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
+import { NotificationContainer, NotificationManager } from 'react-notifications'
+import { CommonContext } from 'tools'
+
+import { useMutation } from '@apollo/react-hooks'
+import gql from 'graphql-tag'
+
+const LOGIN_USER = gql`
+  mutation login($input: LoginUserInput!) {
+    login(input: $input) {
+      accessToken
+    }
+  }
+`
 
 const NormalLoginForm = (props) => {
   const [form] = Form.useForm()
+  const [Login] = useMutation(LOGIN_USER)
+  const context = useContext(CommonContext)
 
-  const handleEnter = useCallback(keyCode => {
-    const { getFieldValue } = form
-    if (keyCode === 13 || !keyCode) {
-      console.log(getFieldValue())
+  const handleEnter = useCallback(() => {
+    const { getFieldsValue } = form
+    const { username, password } = getFieldsValue()
+    Login({ 
+      variables: {
+        input: {
+          username,
+          password
+        }
+      }
+    }).then(res => {
+      const { accessToken } = res.data.login
+      localStorage.setItem('access-token', accessToken)
+      context.dispatch({
+        type: 'login',
+        payload: true
+      })
+      NotificationManager.success(
+        'Đăng nhập thành công!',
+        'Success!',
+        2000
+      )
+    }).catch(err => {
+      console.log(err)
+      NotificationManager.error(
+        'Sai tài khoản hoặc mật khẩu!',
+        'Có lỗi xảy ra!',
+        2000
+      )
+    })
+  }, [form, Login, context])
+
+  const handlePress = useCallback(keyCode => {
+    if (keyCode === 13) {
+      handleEnter()
     }
-  }, [form])
+  }, [handleEnter])
 
   const forgotPass = useCallback(() => {
     console.log('forgot')
@@ -39,7 +85,7 @@ const NormalLoginForm = (props) => {
           <Input
             placeholder="Tên đăng nhập"
             spellCheck={false}
-            onKeyDown={e => handleEnter(e.keyCode)}
+            onKeyDown={e => handlePress(e.keyCode)}
           />
         </Form.Item>
         <Form.Item
@@ -51,7 +97,7 @@ const NormalLoginForm = (props) => {
           <Input.Password
             placeholder="Mật khẩu"
             spellCheck={false}
-            onKeyDown={e => handleEnter(e.keyCode)}
+            onKeyDown={e => handlePress(e.keyCode)}
           />
         </Form.Item>
         <Form.Item>
@@ -74,6 +120,7 @@ const NormalLoginForm = (props) => {
             Đăng nhập
           </Button>
         </Form.Item>
+        <NotificationContainer />
       </Form>
     </>
   )

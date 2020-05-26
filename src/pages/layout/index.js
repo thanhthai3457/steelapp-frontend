@@ -1,9 +1,9 @@
 import React from 'react'
 import Background from '../../assets/images/background.png'
+import NavLayout from './navbar'
 
 const Layout = props => {
   const { children, history } = props
-  console.log('layout', children, history)
 
   return (
     <div
@@ -18,7 +18,7 @@ const Layout = props => {
         WebkitOverflowScrolling: 'touch'
       }}
     >
-      <h1>Đây là header</h1>
+      <NavLayout />
       {React.cloneElement(children, {
         currentProfile: {
           name: 'Thanh',
