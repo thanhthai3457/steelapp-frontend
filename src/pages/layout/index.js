@@ -18,7 +18,7 @@ const Layout = props => {
         WebkitOverflowScrolling: 'touch'
       }}
     >
-      <NavLayout />
+      <NavLayout history={history} />
       {React.cloneElement(children, {
         currentProfile: {
           name: 'Thanh',

@@ -15,7 +15,7 @@ const LOGIN_USER = gql`
   }
 `
 
-const NormalLoginForm = (props) => {
+const NormalLoginForm = () => {
   const [form] = Form.useForm()
   const [Login] = useMutation(LOGIN_USER)
   const context = useContext(CommonContext)
