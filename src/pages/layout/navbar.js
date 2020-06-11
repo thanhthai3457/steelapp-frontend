@@ -1,10 +1,26 @@
-import React from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
+import gql from 'graphql-tag'
+import { graphql } from '@apollo/react-hoc'
 import { Navbar, Form, Nav, NavDropdown } from 'react-bootstrap'
 import { Select } from 'antd'
 
 const { Option } = Select
 
 const NavLayout = props => {
+  const [optsStore, setOptsStore] = useState([])
+  
+  useEffect(() => {
+    if (props.data.getStores) {
+      setOptsStore(props.data.getStores)
+    }
+  }, [props.data])
+
+  const options = useMemo(() => (
+    optsStore.map((e, i) => (
+      <Option key={i}>{e.name}</Option>
+    ))
+  ), [optsStore])
+
   return (
     <>
       <Navbar bg="light" expand="lg">
@@ -26,8 +42,7 @@ const NavLayout = props => {
             <Select
               style={{ width: 300 }}
             >
-              <Option key='1'>CH 1</Option>
-              <Option key='2'>CH 2</Option>
+              {options}
             </Select>
           </Form>
         </Navbar.Collapse>
@@ -36,4 +51,12 @@ const NavLayout = props => {
   )
 }
 
-export default NavLayout
+export default graphql(gql`
+  query {
+    getStores {
+      _id
+      code
+      name
+    }
+  }
+`)(NavLayout)

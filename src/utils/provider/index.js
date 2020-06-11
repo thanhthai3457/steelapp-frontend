@@ -34,7 +34,7 @@ const commonReducer = (state, action) => {
 
 const AppProvider = ({ children }) => {
   const [commonState, dispatch] = useReducer(commonReducer, {
-    isAuth: !!localStorage.getItem('access-token'),
+    isAuth: !!localStorage.getItem('authorization'),
     sourceStore: {},
     currentProfile: {}
   })

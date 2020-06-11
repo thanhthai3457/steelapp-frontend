@@ -8,8 +8,10 @@ import { getMainDefinition } from 'apollo-utilities'
 
 import { errorMiddleware } from './errorMiddleware'
 
-const domain = 'devcloud5.digihcs.com:15344' // window.location.host // 'tms2.digihcs.com'
-const endPoint = `graphqlclinic`
+// const domain = 'devcloud3.digihcs.com:13534' // window.location.host // 'tms2.digihcs.com'
+// const domain = 'devcloud3.digihcs.com:13534' // window.location.host // 'tms2.digihcs.com'
+const domain = 'localhost:3031'
+const endPoint = `graphql`
 // const endPoint = `${process.env.END_POINT}`
 
 const urn = process.env.GRAPHQL_URN || `${domain}/${endPoint}`
@@ -23,7 +25,7 @@ const wsLink = new WebSocketLink({
   options: {
     reconnect: true,
     connectionParams: () => ({
-      'access-token': window.localStorage.getItem('access-token') || ''
+      'authorization': window.localStorage.getItem('authorization') || ''
     })
   }
 })
@@ -31,7 +33,7 @@ const wsLink = new WebSocketLink({
 const authLink = setContext((_, { headers }) => ({
   headers: {
     ...headers,
-    'access-token': localStorage.getItem('access-token') || ''
+    'authorization': localStorage.getItem('authorization') || ''
   }
 }))
 

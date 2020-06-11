@@ -3,36 +3,34 @@ import { withRouter } from 'react-router-dom'
 import { Form, Input, Button } from 'antd'
 import { NotificationContainer, NotificationManager } from 'react-notifications'
 import { CommonContext } from 'tools'
-
-import { useMutation } from '@apollo/react-hooks'
+import { Client } from 'tools'
 import gql from 'graphql-tag'
 
 const LOGIN_USER = gql`
-  mutation login($input: LoginUserInput!) {
-    login(input: $input) {
-      accessToken
+  query login($username: String!, $password: String!) {
+    login(username: $username, password: $password) {
+      token
     }
   }
 `
 
 const NormalLoginForm = () => {
   const [form] = Form.useForm()
-  const [Login] = useMutation(LOGIN_USER)
   const context = useContext(CommonContext)
 
   const handleEnter = useCallback(() => {
     const { getFieldsValue } = form
     const { username, password } = getFieldsValue()
-    Login({ 
+    Client.query({
+      query: LOGIN_USER,
       variables: {
-        input: {
-          username,
-          password
-        }
-      }
+        username,
+        password
+      },
+      fetchPolicy: 'no-cache'
     }).then(res => {
-      const { accessToken } = res.data.login
-      localStorage.setItem('access-token', accessToken)
+      const { token } = res.data.login
+      localStorage.setItem('authorization', token)
       context.dispatch({
         type: 'login',
         payload: true
@@ -50,7 +48,7 @@ const NormalLoginForm = () => {
         2000
       )
     })
-  }, [form, Login, context])
+  }, [form, context])
 
   const handlePress = useCallback(keyCode => {
     if (keyCode === 13) {
