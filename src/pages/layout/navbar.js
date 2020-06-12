@@ -1,46 +1,82 @@
-import React, { useState, useMemo, useEffect } from 'react'
+import React, { useState, useMemo, useEffect, useContext } from 'react'
 import gql from 'graphql-tag'
 import { graphql } from '@apollo/react-hoc'
-import { Navbar, Form, Nav, NavDropdown } from 'react-bootstrap'
+import { Navbar, Form, Nav } from 'react-bootstrap'
 import { Select } from 'antd'
+import { CommonContext } from 'tools'
 
 const { Option } = Select
 
 const NavLayout = props => {
   const [optsStore, setOptsStore] = useState([])
+  const commonContext = useContext(CommonContext)
+  const { dispatch, sourceStore } = commonContext
   
   useEffect(() => {
+    if (props.data.loading) props.preloader.current.show()
+    else {
+      setTimeout(() => {
+        props.preloader.current.hide()
+      }, 2000)
+    }
     if (props.data.getStores) {
       setOptsStore(props.data.getStores)
     }
-  }, [props.data])
+  }, [props.data, props.preloader])
+
+  useEffect(() => {
+    if (optsStore && optsStore.length) {
+      let store = optsStore[0]
+      localStorage.setItem('store-selected', store._id)
+      dispatch({
+        type: 'changeStore',
+        payload: {
+          _id: store._id,
+          code: store.code,
+          name: store.name
+        }
+      })
+    }
+  }, [optsStore, dispatch])
 
   const options = useMemo(() => (
-    optsStore.map((e, i) => (
-      <Option key={i}>{e.name}</Option>
+    optsStore.map((e) => (
+      <Option key={e._id}>{e.name}</Option>
     ))
   ), [optsStore])
+
+  const selectHandle = val => {
+    const store = optsStore.find(e => e._id === val)
+    localStorage.setItem('store-selected', store._id)
+    dispatch({
+      type: 'changeStore',
+      payload: {
+        _id: store._id,
+        code: store.code,
+        name: store.name
+      }
+    })
+  }
+
+  const handleGoback = () => {
+    props.history.goBack()
+  }
 
   return (
     <>
       <Navbar bg="light" expand="lg">
-        <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand>
+        <Navbar.Brand href='/steelApp/home'>Nguyên Phú</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="mr-auto">
-            <Nav.Link href="#home">Home</Nav.Link>
-            <Nav.Link href="#link">Link</Nav.Link>
-            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-              <NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
-              <NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
-              <NavDropdown.Divider />
-              <NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-            </NavDropdown>
+            <Nav.Link onClick={handleGoback}>Về trước</Nav.Link>
           </Nav>
           <Form inline>
             <Select
               style={{ width: 300 }}
+              placeholder='Chọn cơ sở'
+              value={sourceStore._id}
+              onSelect={selectHandle}
             >
               {options}
             </Select>
