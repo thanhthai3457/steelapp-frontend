@@ -3,16 +3,20 @@
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
     "eslint": "^6.6.0",
     "eslint-config-airbnb": "^18.1.0",
     "eslint-plugin-react": "^7.20.0",
-    "node-sass": "^4.14.1",
-    "react-hot-loader": "^4.12.19",
     "less": "^3.10.3",
-    "less-loader": "^5.0.0"
+    "less-loader": "^5.0.0",
+    "node-sass": "^4.14.1",
+    "react-hot-loader": "^4.12.19"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
+    "@emotion/core": "^10.0.28",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
@@ -38,6 +42,7 @@
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.1",
+    "react-spinners": "^0.8.3",
     "reactstrap": "^8.4.1",
     "shallow-equal": "^1.2.1",
     "subscriptions-transport-ws": "^0.9.16",
