@@ -6,6 +6,7 @@ import Preloader from 'components/preloader'
 const Layout = props => {
   const { children, history } = props
   const preloaderRef = useRef(null)
+  console.log(preloaderRef)
 
   return (
     <div
@@ -25,6 +26,9 @@ const Layout = props => {
         currentProfile: {
           name: 'Thanh',
           mobile: '077-357-3457'
+        },
+        menuNav: {
+          linkNav: ['Danh mục', 'Bán Hàng', 'Báo cáo']
         },
         preloader: preloaderRef
       })}
