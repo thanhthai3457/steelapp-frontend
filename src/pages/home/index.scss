@@ -1,0 +1,43 @@
+.session {
+  margin-top: 15px;
+  padding-bottom: 10px;
+}
+
+.session .title-top {
+  font-weight: 600;
+  font-size: 16px;
+  color: #32363a;
+  margin-bottom: 15px;
+  background: transparent;
+  border: none;
+  padding: 2px;
+  margin-left: 20px;
+  outline: none;
+  box-sizing: border-box;
+  border-bottom: 1px solid transparent;
+}
+
+.session .grid-wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 180px);
+  grid-template-rows: repeat(auto-fill, 150px);
+  grid-gap: 5px;
+  margin-top: 10px;
+}
+
+.session .grid-wrapper .grid-item {
+  box-shadow: 0 0 0 0.0625rem rgba(0,0,0,0.1), 0 0.125rem 0.5rem 0 rgba(0,0,0,0.1);
+  border-radius: 0.25rem;
+  box-sizing: border-box;
+  position: relative;
+  cursor: pointer;
+}
+
+.session .grid-wrapper .grid-item .name {
+  position: absolute;
+  top: 10px;
+  left: 15px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #32363a;
+}

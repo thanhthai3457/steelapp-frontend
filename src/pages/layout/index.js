@@ -6,7 +6,58 @@ import Preloader from 'components/preloader'
 const Layout = props => {
   const { children, history } = props
   const preloaderRef = useRef(null)
-  console.log(preloaderRef)
+  const navigationsRef = useRef({
+    name: 'Default',
+    components: [
+      {
+        title: 'Danh mục',
+        children: [
+          {
+            name: 'Khách hàng',
+            dest: '/customers'
+          },
+          {
+            name: 'Nhà cung cấp',
+            dest: '/vendors'
+          },
+          {
+            name: 'Kho',
+            dest: '/stores'
+          },
+          {
+            name: 'Hàng hóa',
+            dest: '/stockModels'
+          },
+        ]
+      },
+      {
+        title: 'Bán hàng',
+        children: [
+          {
+            name: 'Bán lẻ',
+            dest: '/retail'
+          },
+          {
+            name: 'Bán sỉ',
+            dest: '/wholeSale'
+          }
+        ]
+      },
+      {
+        title: 'Báo cáo',
+        children: [
+          {
+            name: 'Báo cáo bán lẻ',
+            dest: '/retailReport'
+          },
+          {
+            name: 'Báo cáo tài chính',
+            dest: '/financialReport'
+          }
+        ]
+      }
+    ]
+  })
 
   return (
     <div
@@ -27,9 +78,7 @@ const Layout = props => {
           name: 'Thanh',
           mobile: '077-357-3457'
         },
-        menuNav: {
-          linkNav: ['Danh mục', 'Bán Hàng', 'Báo cáo']
-        },
+        navigations: navigationsRef.current,
         preloader: preloaderRef
       })}
       <Preloader ref={preloaderRef} />
