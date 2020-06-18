@@ -41,3 +41,33 @@
   font-weight: 600;
   color: #32363a;
 }
+
+.session:last-child {
+  height: calc(100% + 200px)
+}
+
+.dash-child::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 3px rgba(0,0,0,0.3);
+	background-color: #F5F5F5;
+	border-radius: 10px;
+}
+
+.dash-child::-webkit-scrollbar
+{
+	width: 5px;
+	background-color: #F5F5F5;
+}
+
+.dash-child::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	background-image: -webkit-gradient(
+    linear,
+    left bottom,
+    left top,
+    color-stop(0.44, rgb(157, 187, 245)),
+    color-stop(0.72, rgb(134, 177, 230)),
+    color-stop(0.86, rgb(83, 108, 184))
+  );
+}
