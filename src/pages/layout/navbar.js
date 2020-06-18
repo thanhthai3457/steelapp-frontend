@@ -66,6 +66,12 @@ const NavLayout = props => {
   return (
     <>
       <Navbar bg='dark' expand='lg'>
+        <Navbar.Brand>
+          <Button
+            onClick={handleGoback}
+            icon={<Icon.ChevronsLeft />}
+          />
+        </Navbar.Brand>
         <Navbar.Brand
           href='/steelApp/home'
           style={{
@@ -77,10 +83,7 @@ const NavLayout = props => {
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav className='mr-auto'>
-            <Button
-              onClick={handleGoback}
-              icon={<Icon.ChevronsLeft />}
-            />
+            <></>
           </Nav>
           <Form inline>
             <Select

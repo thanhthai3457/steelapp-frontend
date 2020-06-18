@@ -1,22 +1,41 @@
-import React, { useMemo } from 'react'
+import React, { useMemo, useCallback } from 'react'
 import { Navbar, Nav } from 'react-bootstrap'
 import './index.scss'
 
 const Home = React.memo((props) => {
   const { navigations } = props
 
+  const handleClickNavBar = useCallback((val) => {
+    const sessionView = document.querySelector(`#${val}`)
+    const wrapper = document.querySelector(`.dash-child`)
+    wrapper.scrollTo({
+      top: sessionView.offsetTop - 90,
+      left: 0,
+      behavior: 'smooth'
+    })
+  }, [])
+
+  const handleClickGrid = useCallback((val) => {
+    props.history.push(`${val}`)
+  }, [props])
+
   const navLink = useMemo(
     () =>
       navigations.components.map((e, i) => (
-        <Nav.Link key={i}>{e.title}</Nav.Link>
+        <Nav.Link
+          key={i}
+          onClick={() => handleClickNavBar(e.id)}
+        >
+          {e.title}
+        </Nav.Link>
       )),
-    [navigations]
+    [navigations, handleClickNavBar]
   )
 
   const contentMenu = useMemo(
     () =>
       navigations.components.map((e, i) => (
-        <div id={e.title} key={i} className='session'>
+        <div id={e.id} key={i} className='session'>
           <div className='top'>
             <div>
               <p className='title-top'>{e.title}</p>
@@ -27,6 +46,7 @@ const Home = React.memo((props) => {
               <div
                 className='grid-item'
                 key={idx}
+                onClick={() => handleClickGrid(elem.dest)}
                 style={{
                   gridRowStart: 'span 1',
                   gridColumnStart: 'span 1',
@@ -40,7 +60,7 @@ const Home = React.memo((props) => {
           </div>
         </div>
       )),
-    [navigations]
+    [navigations, handleClickGrid]
   )
 
   return (
@@ -51,14 +71,16 @@ const Home = React.memo((props) => {
         </Navbar.Collapse>
       </Navbar>
       <div
+        className='dash-container'
         style={{
-          height: '700px'
+          height: window.innerHeight - 100
         }}
       >
         <div
+          className='dash-child'
           style={{
             backgroundColor: '#F2F2F2',
-            height: '100%',
+            height: '120%',
             padding: '10px',
             overflow: 'auto'
           }}

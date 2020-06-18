@@ -11,6 +11,7 @@ const Layout = props => {
     components: [
       {
         title: 'Danh mục',
+        id: 'categories',
         children: [
           {
             name: 'Khách hàng',
@@ -32,6 +33,7 @@ const Layout = props => {
       },
       {
         title: 'Bán hàng',
+        id: 'sales',
         children: [
           {
             name: 'Bán lẻ',
@@ -45,6 +47,7 @@ const Layout = props => {
       },
       {
         title: 'Báo cáo',
+        id: 'reports',
         children: [
           {
             name: 'Báo cáo bán lẻ',
