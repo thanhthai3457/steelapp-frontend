@@ -1,9 +1,16 @@
 import React from 'react'
 
-export default () => {
+export default (props) => {
   return (
     <>
-      Khách hàng
+      <button
+        type='button'
+        onClick={() => {
+          props.history.push('/stores')
+        }}
+      >
+        abc
+      </button>
     </>
   )
 }

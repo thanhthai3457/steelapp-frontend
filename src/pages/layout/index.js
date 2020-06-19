@@ -76,14 +76,16 @@ const Layout = props => {
       }}
     >
       <NavLayout history={history} preloader={preloaderRef} />
-      {React.cloneElement(children, {
-        currentProfile: {
-          name: 'Thanh',
-          mobile: '077-357-3457'
-        },
-        navigations: navigationsRef.current,
-        preloader: preloaderRef
-      })}
+      <div className='steelapp-page-wrapper'>
+        {React.cloneElement(children, {
+          currentProfile: {
+            name: 'Thanh',
+            mobile: '077-357-3457'
+          },
+          navigations: navigationsRef.current,
+          preloader: preloaderRef
+        })}
+      </div>
       <Preloader ref={preloaderRef} />
     </div>
   )
