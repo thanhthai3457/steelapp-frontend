@@ -1,6 +1,6 @@
 {
-  "short_name": "React App",
-  "name": "Create React App Sample",
+  "short_name": "Phần mềm quản lý cửa hàng sắt thép",
+  "name": "Quản lý cửa hàng sắt thép",
   "icons": [
     {
       "src": "favicon.ico",

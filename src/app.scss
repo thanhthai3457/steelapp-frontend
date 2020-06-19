@@ -1,0 +1,31 @@
+.steelapp-page-wrapper {
+  .steelapp-toolbar {
+    height: 45px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  
+    .steelapp-title-component {
+      color: #848484;
+      font-weight: 600;
+      font-size: 18px;
+      margin-left: 50px;
+    }
+  }
+  
+  .steelapp-content {
+    background-color: #fff !important;
+    overflow-y: auto;
+  }
+}
+
+.ag-grid-app-wrapper {
+  margin: 0px 12px 0px 12px !important;
+  height: calc(100vh - 105px);
+
+  .ag-header-pagination {
+    height: 45px;
+    display: flex;
+    align-items: center;
+  }
+}
