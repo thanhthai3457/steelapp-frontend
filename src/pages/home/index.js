@@ -9,7 +9,7 @@ const Home = React.memo((props) => {
     const sessionView = document.querySelector(`#${val}`)
     const wrapper = document.querySelector(`.dash-child`)
     wrapper.scrollTo({
-      top: sessionView.offsetTop - 90,
+      top: sessionView.offsetTop - 120,
       left: 0,
       behavior: 'smooth'
     })
