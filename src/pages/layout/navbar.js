@@ -73,9 +73,12 @@ const NavLayout = props => {
           />
         </Navbar.Brand>
         <Navbar.Brand
-          href='/steelApp/home'
+          onClick={() => {
+            props.history.push('/home')
+          }}
           style={{
-            color: 'white'
+            color: 'white',
+            cursor: 'pointer'
           }}
         >
           Nguyên Phú
