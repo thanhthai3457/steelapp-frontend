@@ -1,13 +1,15 @@
-import React, { useState, useEffect, useMemo, useRef } from 'react'
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react'
 import Grid from 'components/grid/index.js'
 import { graphql } from '@apollo/react-hoc'
 import { PlusOutlined } from '@ant-design/icons'
 import { GET_STORES } from './gql'
+import Modal from './modal'
 
 const StoreShop = props => {
   const [dataStore, setDataStore] = useState([])
   const gridApi = useRef(null)
-  
+  const modalRef = useRef(null)
+
   useEffect(() => {
     if (props.data.loading) props.preloader.current.show()
     else {
@@ -22,6 +24,14 @@ const StoreShop = props => {
       props.preloader.current.hide()
     }
   }, [props.data, props.preloader])
+
+  const handleAddClick = useCallback(() => {
+    modalRef.current.open()
+  }, [])
+
+  const handleEditClick = useCallback((slt) => {
+    modalRef.current.open(slt)
+  }, [])
 
   const gridOptions = useMemo(() => ({
     paginationNumberFormatter: function(params) {
@@ -50,12 +60,19 @@ const StoreShop = props => {
         action: 'add',
         type: 'default',
         icon: <PlusOutlined />,
-        onClick: () => console.log('add')
+        tooltip: 'Thêm kho mới',
+        onClick: handleAddClick
       },
       {
         action: 'update',
         type: 'single',
-        onClick: (e) => console.log(e)
+        tooltip: 'Chỉnh sửa',
+        onClick: (selectecRows) => handleEditClick(selectecRows[0])
+      },
+      {
+        action: 'delete',
+        type: 'multiple',
+        onClick: (selectecRows) => console.log(selectecRows)
       }
     ],
     defaultColDef: {
@@ -67,8 +84,8 @@ const StoreShop = props => {
     rowMultiSelectWithClick: true,
     floatingFilter: true,
     pagination: true,
-    defaultPageSize: 2
-  }), [])
+    defaultPageSize: 50
+  }), [handleAddClick, handleEditClick])
 
   return (
     <div>
@@ -82,6 +99,9 @@ const StoreShop = props => {
           gridApi={gridApi}
         />
       </div>
+      <Modal
+        ref={modalRef}
+      />
     </div>
   )
 }

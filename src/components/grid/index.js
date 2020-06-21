@@ -1,17 +1,24 @@
 import React, { useRef, useState, useEffect, useMemo } from 'react'
 import { AgGridReact } from 'ag-grid-react'
 import { Button } from 'antd'
-import { PlusOutlined, EditOutlined } from '@ant-design/icons'
+import {
+  PlusOutlined, EditOutlined, DeleteOutlined,
+  PrinterOutlined, RedoOutlined, EyeOutlined
+} from '@ant-design/icons'
 
 const Grid = props => {
   const [defaultPageSize, setDefaultPageSize] = useState(1)
   const api = useRef(null)
-  const [optionsPage, setOptionsPage] = useState([1, 20, 50, 100])
+  const [optionsPage, setOptionsPage] = useState([10, 20, 50, 100])
   const [headerButton, setHeaderButton] = useState([])
   const [selected, setSelected] = useState([])
   const [chose] = useState({
     add: <PlusOutlined />,
-    update: <EditOutlined />
+    update: <EditOutlined />,
+    delete: <DeleteOutlined />,
+    print: <PrinterOutlined />,
+    reload: <RedoOutlined />,
+    info: <EyeOutlined />
   })
 
   useEffect(() => {
@@ -31,6 +38,7 @@ const Grid = props => {
         icon: actionDef.icon ? actionDef.icon : chose[actionDef.action]
       })))
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const onPageSizeChanged = (val) => {
@@ -72,6 +80,20 @@ const Grid = props => {
     }
   }, [defaultPageSize, props])
 
+  const actionHeader = useMemo(() => (
+    headerButton.map(e => (
+      <Button
+        icon={e.icon}
+        disabled={
+          (e.type !== 'default' && (selected.length === 0))
+          || (e.type === 'single' && (selected.length === 0 || selected.length > 1))
+        }
+        className='ag-steelapp-headerbutton'
+        onClick={() => typeof e.onClick === 'function' && e.onClick(api.current.getSelectedRows())}
+      />
+    ))
+  ), [headerButton, selected])
+
   return (
     <div className='ag-grid-app-wrapper'>
       <div className='ag-header-pagination'>
@@ -95,14 +117,7 @@ const Grid = props => {
           <span>{selected.length === 0 ? '' : `(${selected.length} ${selected.length > 1 ? 'rows selected' : 'row selected'})`}</span>
         </div>
         <div className='right'>
-          {headerButton.map(e => (
-            <Button
-              icon={e.icon}
-              disabled={e.type === 'single' && (selected.length === 0 || selected.length > 1)}
-              className='ag-steelapp-headerbutton'
-              onClick={() => typeof e.onClick === 'function' && e.onClick(api.current.getSelectedRows())}
-            />
-          ))}
+          {actionHeader}
         </div>
       </div>
       <div
