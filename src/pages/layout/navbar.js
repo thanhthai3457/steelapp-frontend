@@ -2,7 +2,7 @@ import React, { useState, useMemo, useEffect, useContext } from 'react'
 import gql from 'graphql-tag'
 import { graphql } from '@apollo/react-hoc'
 import { Navbar, Form, Nav } from 'react-bootstrap'
-import { Select, Button } from 'antd'
+import { Select, Button, Tooltip } from 'antd'
 import * as Icon from 'react-feather'
 import { CommonContext } from 'tools'
 
@@ -67,10 +67,15 @@ const NavLayout = props => {
     <>
       <Navbar bg='dark' expand='lg'>
         <Navbar.Brand>
-          <Button
-            onClick={handleGoback}
-            icon={<Icon.ChevronsLeft />}
-          />
+          <Tooltip
+            placement='bottom'
+            title='Trang trước'
+          >
+            <Button
+              onClick={handleGoback}
+              icon={<Icon.ChevronsLeft />}
+            />
+          </Tooltip>
         </Navbar.Brand>
         <Navbar.Brand
           onClick={() => {
