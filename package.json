@@ -47,7 +47,7 @@
     "reactstrap": "^8.4.1",
     "shallow-equal": "^1.2.1",
     "subscriptions-transport-ws": "^0.9.16",
-    "xlsx": "^0.15.5"
+    "xlsx": "^0.17.0"
   },
   "scripts": {
     "start": "react-scripts start",
